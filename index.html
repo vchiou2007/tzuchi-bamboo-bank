@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>竹筒歲月 — 每日一善</title>
+  <style>
+    /* ===== Google Fonts ===== */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+    /* ===== 全域重設 ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; min-height: 100vh;
+      font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+      background: #F5F0E8;
+      color: #3A2E20;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== App Container ===== */
+    #app {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 20px 16px 30px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ===== Header ===== */
+    .header {
+      width: 100%;
+      text-align: center;
+      padding: 12px 0 6px;
+      position: relative;
+    }
+    .header .greeting {
+      font-size: 15px;
+      color: #8B7355;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+    .header .date-display {
+      font-size: 12px;
+      color: #A09070;
+      letter-spacing: 0.5px;
+    }
+    .header .tzuchi-logo {
+      width: 44px; height: 44px;
+      margin: 0 auto 8px;
+      display: block;
+    }
+
+    /* ===== Jing Si Aphorism Card ===== */
+    .aphorism-card {
+      width: 100%;
+      background: linear-gradient(135deg, #FFFFFF 0%, #FCF8F0 100%);
+      border-radius: 16px;
+      padding: 20px 18px;
+      margin: 12px 0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      border: 1px solid rgba(196, 176, 140, 0.2);
+      position: relative;
+      text-align: center;
+    }
+    .aphorism-card .label {
+      font-size: 11px;
+      color: #C8974A;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .aphorism-card .quote {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #3A2E20;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+    .aphorism-card .author {
+      font-size: 12px;
+      color: #A09070;
+      margin-top: 10px;
+      letter-spacing: 1px;
+    }
+    .aphorism-card .divider {
+      width: 40px; height: 2px;
+      background: #D4A76A;
+      margin: 10px auto 12px;
+      border-radius: 2px;
+      opacity: 0.5;
+    }
+
+    /* ===== Daily Mission ===== */
+    .mission-section {
+      width: 100%;
+      margin: 8px 0;
+    }
+    .mission-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(196, 176, 140, 0.12);
+    }
+    .mission-row .icon {
+      font-size: 22px;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #9BC53D, #7FA832);
+      border-radius: 50%;
+      flex-shrink: 0;
+      color: white;
+      font-size: 16px;
+    }
+    .mission-row .icon.heart { background: linear-gradient(135deg, #E88D67, #D4754F); }
+    .mission-row .icon.lotus { background: linear-gradient(135deg, #C8974A, #B8863A); }
+    .mission-row .text {
+      flex: 1;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #3A2E20;
+    }
+    .mission-row .text .label {
+      font-size: 10px;
+      color: #A09070;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ===== Bamboo Bank ===== */
+    .bamboo-section {
+      width: 100%;
+      text-align: center;
+      margin: 16px 0 8px;
+      position: relative;
+    }
+    .bamboo-section .title {
+      font-size: 13px;
+      color: #8B7355;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .bamboo-container {
+      position: relative;
+      width: 200px;
+      height: 280px;
+      margin: 0 auto;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .bamboo-container:active {
+      transform: scale(0.97);
+      transition: transform 0.1s;
+    }
+
+    /* ===== Bamboo SVG ===== */
+    .bamboo-svg {
+      width: 100%; height: 100%;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.12));
+    }
+
+    /* ===== Coin Drop Animation ===== */
+    .coin-fly {
+      position: fixed;
+      width: 36px; height: 36px;
+      pointer-events: none;
+      z-index: 100;
+      font-size: 30px;
+      line-height: 36px;
+      text-align: center;
+      animation: coinDrop 0.8s ease-in forwards;
+    }
+    @keyframes coinDrop {
+      0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+      60% { opacity: 1; transform: translateY(120px) scale(1.1) rotate(360deg); }
+      100% { opacity: 0; transform: translateY(180px) scale(0.6) rotate(720deg); }
+    }
+
+    /* ===== Clink Ripple ===== */
+    .ripple {
+      position: absolute;
+      top: 55%; left: 50%;
+      width: 60px; height: 30px;
+      margin-left: -30px; margin-top: -15px;
+      border-radius: 50%;
+      border: 2px solid #C8974A;
+      opacity: 0;
+      pointer-events: none;
+      animation: rippleAnim 0.6s ease-out forwards;
+    }
+    @keyframes rippleAnim {
+      0% { transform: scale(0.3); opacity: 0.8; }
+      100% { transform: scale(2); opacity: 0; }
+    }
+
+    /* ===== Total Display ===== */
+    .total-display {
+      margin: 8px 0 4px;
+      text-align: center;
+    }
+    .total-display .amount {
+      font-size: 36px;
+      font-weight: 700;
+      color: #3A2E20;
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
+    .total-display .amount .unit {
+      font-size: 16px;
+      font-weight: 400;
+      color: #8B7355;
+      margin-left: 2px;
+    }
+    .total-display .sub {
+      font-size: 12px;
+      color: #A09070;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    /* ===== Stats ===== */
+    .stats-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.7);
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+      border: 1px solid rgba(196, 176, 140, 0.12);
+    }
+    .stat-card .num {
+      font-size: 22px;
+      font-weight: 600;
+      color: #3A2E20;
+    }
+    .stat-card .lbl {
+      font-size: 10px;
+      color: #A09070;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    /* ===== Drop Button ===== */
+    .drop-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #9BC53D 0%, #7FA832 100%);
+      color: white;
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 4px 12px rgba(155, 197, 61, 0.3);
+    }
+    .drop-btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 6px rgba(155, 197, 61, 0.2);
+    }
+    .drop-btn:disabled {
+      opacity: 0.5;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ===== History ===== */
+    .history-section {
+      width: 100%;
+      margin-top: 16px;
+    }
+    .history-section .toggle-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      font-size: 13px;
+      color: #8B7355;
+      cursor: pointer;
+      padding: 8px;
+      letter-spacing: 1px;
+      font-family: inherit;
+    }
+    .history-section .toggle-btn:hover { color: #3A2E20; }
+    .history-list {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .history-list.open { max-height: 400px; overflow-y: auto; }
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 4px;
+      border-bottom: 1px solid rgba(196, 176, 140, 0.1);
+      font-size: 13px;
+      color: #5A4E3A;
+    }
+    .history-item .date { color: #A09070; }
+    .history-item .count { font-weight: 500; }
+
+    /* ===== Sparkle effect ===== */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99;
+      animation: sparkleAnim 0.8s ease-out forwards;
+    }
+    @keyframes sparkleAnim {
+      0% { transform: translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 420px) {
+      #app { padding: 16px 12px 24px; }
+      .bamboo-container { width: 160px; height: 224px; }
+      .total-display .amount { font-size: 30px; }
+      .aphorism-card .quote { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <!-- Header -->
+  <div class="header">
+    <svg class="tzuchi-logo" viewBox="0 0 100 100" fill="none">
+      <!-- Simplified Tzu Chi lotus logo -->
+      <circle cx="50" cy="50" r="46" fill="#9BC53D" opacity="0.12"/>
+      <path d="M50 20 Q35 40 30 55 Q25 70 30 75 Q35 80 50 75 Q65 80 70 75 Q75 70 70 55 Q65 40 50 20Z" fill="#9BC53D" opacity="0.7"/>
+      <path d="M50 28 Q42 42 38 52 Q34 62 38 65 Q42 68 50 64 Q58 68 62 65 Q66 62 62 52 Q58 42 50 28Z" fill="#FFFFFF" opacity="0.6"/>
+      <circle cx="50" cy="48" r="6" fill="#C8974A" opacity="0.6"/>
+    </svg>
+    <div class="greeting" id="greeting">早安，菩薩早安</div>
+    <div class="date-display" id="dateDisplay">—</div>
+  </div>
+
+  <!-- Jing Si Aphorism -->
+  <div class="aphorism-card">
+    <div class="label">✦ 靜思語</div>
+    <div class="divider"></div>
+    <div class="quote" id="aphorismText">—</div>
+    <div class="author">—— 證嚴法師《靜思語》</div>
+  </div>
+
+  <!-- Daily Missions -->
+  <div class="mission-section">
+    <div class="mission-row">
+      <div class="icon">🌱</div>
+      <div class="text">
+        <span class="label">今日好事</span>
+        <span id="goodDeed">—</span>
+      </div>
+    </div>
+    <div class="mission-row">
+      <div class="icon heart">💛</div>
+      <div class="text">
+        <span class="label">今日好話</span>
+        <span id="goodWord">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bamboo Bank -->
+  <div class="bamboo-section">
+    <div class="title">🎋 竹筒歲月．點滴成愛</div>
+    <div class="bamboo-container" id="bambooContainer">
+      <svg class="bamboo-svg" viewBox="0 0 200 280" fill="none">
+        <!-- Shadow -->
+        <ellipse cx="100" cy="270" rx="60" ry="8" fill="#3A2E20" opacity="0.08"/>
+        
+        <!-- Main bamboo tube body -->
+        <defs>
+          <linearGradient id="bambooGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#C4A36A"/>
+            <stop offset="20%" stop-color="#D4B88A"/>
+            <stop offset="40%" stop-color="#C8A870"/>
+            <stop offset="60%" stop-color="#E0C898"/>
+            <stop offset="80%" stop-color="#C8A870"/>
+            <stop offset="100%" stop-color="#B89860"/>
+          </linearGradient>
+          <linearGradient id="slotGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3A2E20"/>
+            <stop offset="100%" stop-color="#5A4E3A"/>
+          </linearGradient>
+          <clipPath id="bambooClip">
+            <rect x="60" y="20" width="80" height="245" rx="6"/>
+          </clipPath>
+        </defs>
+
+        <!-- Body -->
+        <rect x="60" y="20" width="80" height="245" rx="6" fill="url(#bambooGrad)" stroke="#B89860" stroke-width="1"/>
+
+        <!-- Bamboo segments (nodes) -->
+        <g clip-path="url(#bambooClip)" opacity="0.3">
+          <line x1="55" y1="50" x2="145" y2="50" stroke="#8B7355" stroke-width="0.8"/>
+          <line x1="55" y1="80" x2="145" y2="80" stroke="#8B7355" stroke-width="0.8"/>
+          <line x1="55" y1="110" x2="145" y2="110" stroke="#8B7355" stroke-width="0.8"/>
+          <line x1="55" y1="140" x2="145" y2="140" stroke="#8B7355" stroke-width="0.8"/>
+          <line x1="55" y1="170" x2="145" y2="170" stroke="#8B7355" stroke-width="0.8"/>
+          <line x1="55" y1="200" x2="145" y2="200" stroke="#8B7355" stroke-width="0.8"/>
+          <line x1="55" y1="230" x2="145" y2="230" stroke="#8B7355" stroke-width="0.8"/>
+        </g>
+
+        <!-- Bamboo grain texture -->
+        <g clip-path="url(#bambooClip)" opacity="0.08">
+          <line x1="70" y1="20" x2="70" y2="265" stroke="#5A4E3A" stroke-width="0.5"/>
+          <line x1="85" y1="20" x2="85" y2="265" stroke="#5A4E3A" stroke-width="0.3"/>
+          <line x1="100" y1="20" x2="100" y2="265" stroke="#5A4E3A" stroke-width="0.4"/>
+          <line x1="115" y1="20" x2="115" y2="265" stroke="#5A4E3A" stroke-width="0.3"/>
+          <line x1="130" y1="20" x2="130" y2="265" stroke="#5A4E3A" stroke-width="0.5"/>
+        </g>
+
+        <!-- Coin slot -->
+        <rect x="85" y="15" width="30" height="10" rx="3" fill="url(#slotGrad)"/>
+        <rect x="88" y="17" width="24" height="6" rx="2" fill="#1A1410"/>
+
+        <!-- Top rim -->
+        <rect x="58" y="20" width="84" height="4" rx="2" fill="#B89860" opacity="0.5"/>
+
+        <!-- Bottom rim -->
+        <rect x="58" y="258" width="84" height="4" rx="2" fill="#A08050" opacity="0.5"/>
+
+        <!-- Red ribbon -->
+        <path d="M60 130 Q55 125 60 120 L80 120 Q85 125 80 130Z" fill="#D44A4A" opacity="0.85"/>
+        <path d="M60 130 Q55 135 60 140 L80 140 Q85 135 80 130Z" fill="#C44040" opacity="0.85"/>
+        <rect x="58" y="126" width="23" height="8" rx="2" fill="#D44A4A"/>
+
+        <!-- Ribbon knot -->
+        <circle cx="80" cy="130" r="5" fill="#C44040"/>
+        <circle cx="80" cy="130" r="3" fill="#D44A4A"/>
+
+        <!-- Ribbon tails -->
+        <path d="M80 135 Q78 150 76 160" stroke="#C44040" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M80 135 Q84 148 86 158" stroke="#D44A4A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+        <!-- Text on bamboo -->
+        <text x="100" y="190" text-anchor="middle" fill="#3A2E20" font-size="11" font-weight="500" opacity="0.7" letter-spacing="2">竹筒歲月</text>
+        <text x="100" y="206" text-anchor="middle" fill="#3A2E20" font-size="9" opacity="0.5" letter-spacing="1">點滴聚大愛</text>
+
+        <!-- Coin inside (shows when has coins) -->
+        <g id="coinInside" opacity="0">
+          <circle cx="100" cy="245" r="8" fill="#C8974A" stroke="#B8863A" stroke-width="1"/>
+          <text x="100" y="248" text-anchor="middle" fill="#3A2E20" font-size="8" font-weight="bold">1</text>
+        </g>
+      </svg>
+
+      <!-- Coin drop ripple overlay -->
+      <div class="ripple" id="rippleEffect" style="display:none;"></div>
+    </div>
+
+    <!-- Total amount -->
+    <div class="total-display">
+      <div class="amount"><span id="totalAmount">0</span><span class="unit">元</span></div>
+      <div class="sub" id="todayCount">今日已投入 0 元</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="num" id="statStreak">0</div>
+      <div class="lbl">連續天數</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statDays">0</div>
+      <div class="lbl">累積天數</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statTotal">0</div>
+      <div class="lbl">總金額</div>
+    </div>
+  </div>
+
+  <!-- Drop button -->
+  <button class="drop-btn" id="dropBtn">投入一元 💰</button>
+
+  <!-- History -->
+  <div class="history-section">
+    <button class="toggle-btn" id="historyToggle">📋 查看投入紀錄</button>
+    <div class="history-list" id="historyList"></div>
+  </div>
+</div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

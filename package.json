@@ -1,0 +1,15 @@
+{
+  "name": "tzuchi-bamboo-bank",
+  "version": "1.0.0",
+  "private": true,
+  "description": "慈濟竹筒歲月 — 每日一善．點滴累積",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
