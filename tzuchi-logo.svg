@@ -1,100 +1,106 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 340" width="300" height="340">
-  <!-- ===== 透明背景（無任何底色） ===== -->
-  
-  <!-- ===== 裝飾葉片（左側 + 右側） ===== -->
-  <g fill="#2D8B2D" opacity="0.85">
-    <!-- 左上葉片 -->
-    <path d="M32 110 Q10 90 20 60 Q32 65 38 82 Q40 90 42 100 Q38 100 32 110Z"/>
-    <path d="M22 132 Q2 118 8 88 Q18 94 24 110 Q28 120 30 128 Q26 128 22 132Z"/>
-    <!-- 左下葉片 -->
-    <path d="M34 210 Q12 218 14 248 Q26 238 32 222 Q36 214 40 206 Q36 208 34 210Z"/>
-    <path d="M24 196 Q6 200 4 230 Q16 220 22 206 Q26 198 28 192 Q24 194 24 196Z"/>
-    <!-- 右上葉片 -->
-    <path d="M268 110 Q290 90 280 60 Q268 65 262 82 Q260 90 258 100 Q262 100 268 110Z"/>
-    <path d="M278 132 Q298 118 292 88 Q282 94 276 110 Q272 120 270 128 Q274 128 278 132Z"/>
-    <!-- 右下葉片 -->
-    <path d="M266 210 Q288 218 286 248 Q274 238 268 222 Q264 214 260 206 Q264 208 266 210Z"/>
-    <path d="M276 196 Q294 200 296 230 Q284 220 278 206 Q274 198 272 192 Q276 194 276 196Z"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 280" width="340" height="280">
+  <!-- 透明背景 / Transparent background -->
 
-  <!-- ===== 中央盾牌 ===== -->
+  <!-- 漸層定義 / Gradients -->
   <defs>
+    <!-- 盾牌綠色漸層 -->
     <linearGradient id="shieldGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#3A9E3A"/>
-      <stop offset="50%" stop-color="#2D8B2D"/>
-      <stop offset="100%" stop-color="#1E6E1E"/>
+      <stop offset="0%" stop-color="#3DA83D"/>
+      <stop offset="45%" stop-color="#2D8B2D"/>
+      <stop offset="100%" stop-color="#1A6E1A"/>
     </linearGradient>
-    <linearGradient id="shieldHighlight" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="rgba(255,255,255,0.12)"/>
-      <stop offset="100%" stop-color="rgba(0,0,0,0.08)"/>
+    <!-- 盾牌高光 -->
+    <linearGradient id="shieldHL" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.15)"/>
+      <stop offset="60%" stop-color="rgba(255,255,255,0.02)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.1)"/>
     </linearGradient>
   </defs>
 
-  <!-- 盾牌外框 -->
-  <path d="M150 32 
-           Q240 32 258 60 
-           Q275 88 278 120
-           Q282 168 260 210
-           Q238 250 200 278
-           Q175 295 150 308
-           Q125 295 100 278
-           Q62 250 40 210
-           Q18 168 22 120
-           Q25 88 42 60
-           Q60 32 150 32Z" 
-        fill="url(#shieldGrad)" 
-        stroke="#1A5E1A" 
-        stroke-width="2"/>
-
-  <!-- 盾牌光澤 -->
-  <path d="M150 38 
-           Q232 38 248 62 
-           Q262 86 266 116
-           Q270 158 252 196
-           Q232 232 198 262
-           Q175 278 150 292
-           Q125 278 102 262
-           Q68 232 48 196
-           Q30 158 34 116
-           Q38 86 52 62
-           Q68 38 150 38Z" 
-        fill="url(#shieldHighlight)"/>
-
-  <!-- ===== 帆船 ===== -->
-  <g transform="translate(150, 170)">
-    <!-- 波浪 -->
-    <path d="M-50 22 Q-30 10 -10 22 Q10 34 30 22 Q50 10 60 22 
-             L60 36 Q50 24 30 36 Q10 48 -10 36 Q-30 24 -50 36Z" 
-          fill="white" opacity="0.85"/>
-    <path d="M-45 16 Q-25 4 -5 16 Q15 28 35 16 Q50 4 58 16 
-             L58 24 Q50 12 35 24 Q15 36 -5 24 Q-25 12 -45 24Z" 
-          fill="white" opacity="0.7"/>
-    
-    <!-- 船身 -->
-    <path d="M-28 20 L-35 30 L35 30 L28 20Z" fill="white"/>
-    
-    <!-- 主帆 -->
-    <path d="M-5 20 L-5 -28 L22 -2 L-5 8Z" fill="white" opacity="0.9"/>
-    
-    <!-- 前帆 -->
-    <path d="M2 20 L2 -12 L22 -2 L2 8Z" fill="white" opacity="0.7"/>
-    
-    <!-- 桅杆 -->
-    <line x1="-3" y1="20" x2="-3" y2="-32" stroke="white" stroke-width="2" opacity="0.6"/>
-    
-    <!-- 旗幟 -->
-    <path d="M-3 -32 L12 -28 L-3 -24Z" fill="white" opacity="0.8"/>
+  <!-- ===== 裝飾葉片 (左右各3片) ===== -->
+  <g fill="#2D8B2D" opacity="0.8">
+    <!-- 左上葉 -->
+    <path d="M48 78 Q22 58 28 42 Q40 46 46 58 Q50 66 52 74 Q48 76 48 78Z"/>
+    <path d="M36 96 Q14 86 16 68 Q26 72 32 84 Q36 92 38 96 Q34 96 36 96Z"/>
+    <path d="M26 118 Q8 114 8 100 Q16 102 22 110 Q26 116 28 118 Q24 118 26 118Z"/>
+    <!-- 右上葉 -->
+    <path d="M292 78 Q318 58 312 42 Q300 46 294 58 Q290 66 288 74 Q292 76 292 78Z"/>
+    <path d="M304 96 Q326 86 324 68 Q314 72 308 84 Q304 92 302 96 Q306 96 304 96Z"/>
+    <path d="M314 118 Q332 114 332 100 Q324 102 318 110 Q314 116 312 118 Q316 118 314 118Z"/>
+    <!-- 左下葉 -->
+    <path d="M44 182 Q22 190 24 202 Q34 196 40 188 Q44 182 44 182Z"/>
+    <path d="M32 196 Q14 198 14 212 Q24 206 30 196Q32 194 32 196Z"/>
+    <path d="M24 210 Q8 210 10 224 Q16 216 22 210Q24 208 24 210Z"/>
+    <!-- 右下葉 -->
+    <path d="M296 182 Q318 190 316 202 Q306 196 300 188 Q296 182 296 182Z"/>
+    <path d="M308 196 Q326 198 326 212 Q316 206 310 196Q308 194 308 196Z"/>
+    <path d="M316 210 Q332 210 330 224 Q324 216 318 210Q316 208 316 210Z"/>
   </g>
 
-  <!-- ===== 慈（左側） ===== -->
-  <text x="72" y="170" text-anchor="middle" font-family="'Noto Sans TC','KaiTi','STKaiti','SimSun','MingLiU',serif" 
-        font-size="38" font-weight="700" fill="white" opacity="0.95">慈</text>
+  <!-- ===== 盾牌主體 ===== -->
+  <!-- 圓潤頂部 + 尖形底部 -->
+  <path d="M170 28 
+           Q240 28 260 52 
+           Q284 78 286 110
+           Q290 150 272 190
+           Q254 224 226 244
+           Q200 258 170 260
+           Q140 258 114 244
+           Q86 224 68 190
+           Q50 150 54 110
+           Q56 78 80 52
+           Q100 28 170 28Z" 
+        fill="url(#shieldGrad)" 
+        stroke="#1A5E1A" 
+        stroke-width="1.5"/>
 
-  <!-- ===== 濟（右側） ===== -->
-  <text x="228" y="170" text-anchor="middle" font-family="'Noto Sans TC','KaiTi','STKaiti','SimSun','MingLiU',serif" 
-        font-size="38" font-weight="700" fill="white" opacity="0.95">濟</text>
+  <!-- 盾牌高光 -->
+  <path d="M170 34 
+           Q234 34 250 54 
+           Q272 76 274 108
+           Q278 146 260 184
+           Q244 214 218 236
+           Q196 248 170 250
+           Q144 248 122 236
+           Q96 214 80 184
+           Q62 146 66 108
+           Q68 76 90 54
+           Q106 34 170 34Z" 
+        fill="url(#shieldHL)"/>
 
-  <!-- ===== 盾牌下方小裝飾 ===== -->
-  <path d="M130 292 Q140 298 150 296 Q160 298 170 292" 
-        fill="none" stroke="#2D8B2D" stroke-width="1.5" opacity="0.5"/>
+  <!-- ===== 帆船 ===== -->
+  <g transform="translate(170, 142)">
+    <!-- 下層波浪 -->
+    <path d="M-42 16 Q-22 4 -2 16 Q18 28 38 16 Q52 6 56 16 
+             L56 28 Q52 18 38 28 Q18 40 -2 28 Q-22 16 -42 28Z" 
+          fill="white" opacity="0.8"/>
+    <!-- 上層波浪 -->
+    <path d="M-36 8 Q-16 -2 4 8 Q24 20 44 8 Q52 2 54 8 
+             L54 18 Q52 10 44 18 Q24 30 4 18 Q-16 6 -36 18Z" 
+          fill="white" opacity="0.7"/>
+    <!-- 船身 -->
+    <path d="M-26 12 L-30 22 L30 22 L26 12Z" fill="white"/>
+    <!-- 主帆 -->
+    <path d="M-4 12 L-4 -24 L20 0 L-4 6Z" fill="white" opacity="0.9"/>
+    <!-- 前帆 -->
+    <path d="M4 12 L4 -10 L20 0 L4 6Z" fill="white" opacity="0.65"/>
+    <!-- 桅杆 -->
+    <line x1="-2" y1="12" x2="-2" y2="-28" stroke="white" stroke-width="1.8" opacity="0.6"/>
+    <!-- 旗 -->
+    <path d="M-2 -28 L10 -24 L-2 -20Z" fill="white" opacity="0.75"/>
+  </g>
+
+  <!-- ===== 慈 (左) ===== -->
+  <text x="86" y="148" text-anchor="middle" 
+        font-family="'Noto Sans TC','KaiTi','STKaiti','SimSun','MingLiU',serif" 
+        font-size="34" font-weight="700" fill="white" opacity="0.95">慈</text>
+
+  <!-- ===== 濟 (右) ===== -->
+  <text x="254" y="148" text-anchor="middle" 
+        font-family="'Noto Sans TC','KaiTi','STKaiti','SimSun','MingLiU',serif" 
+        font-size="34" font-weight="700" fill="white" opacity="0.95">濟</text>
+
+  <!-- 盾牌底部裝飾線 -->
+  <path d="M148 248 Q158 252 170 250 Q182 252 192 248" 
+        fill="none" stroke="#2D8B2D" stroke-width="1.5" opacity="0.4"/>
 </svg>
