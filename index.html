@@ -313,6 +313,76 @@
       0% { transform: translate(0,0) scale(1); opacity: 1; }
       100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
     }
+    /* ===== Applause overlay ===== */
+    .applause-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .applause-overlay.show { opacity: 1; }
+    .applause-overlay .hands {
+      font-size: 60px;
+      animation: clapAnim 0.5s ease-in-out infinite alternate;
+    }
+    @keyframes clapAnim {
+      0% { transform: scale(1) rotate(-15deg); }
+      100% { transform: scale(1.2) rotate(15deg); }
+    }
+    .applause-overlay .text {
+      font-size: 20px;
+      color: #9BC53D;
+      font-weight: 500;
+      letter-spacing: 3px;
+      margin-top: 12px;
+      text-shadow: 0 2px 8px rgba(155, 197, 61, 0.3);
+      animation: textPop 0.5s ease-out;
+    }
+    @keyframes textPop {
+      0% { transform: scale(0.3); opacity: 0; }
+      60% { transform: scale(1.15); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .applause-overlay .sub-text {
+      font-size: 13px;
+      color: #A09070;
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+    /* ===== Confetti particles ===== */
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      z-index: 199;
+      width: 8px; height: 8px;
+      border-radius: 2px;
+      animation: confettiFall var(--duration) ease-in forwards;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    /* ===== Coin sound wave ===== */
+    .sound-wave {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 40px; height: 40px;
+      margin-left: -20px; margin-top: -20px;
+      border-radius: 50%;
+      border: 2px solid #C8974A;
+      animation: soundWave 0.5s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes soundWave {
+      0% { transform: scale(0.5); opacity: 0.8; }
+      100% { transform: scale(3); opacity: 0; }
+    }
     /* ===== Responsive ===== */
     @media (max-width: 420px) {
       #app { padding: 16px 12px 24px; }
@@ -321,7 +391,7 @@
       .aphorism-card .quote { font-size: 15px; }
     }
   </style>
-  <script type="module" crossorigin src="/tzuchi-bamboo-bank/assets/index-xU4x7dVn.js"></script>
+  <script type="module" crossorigin src="/tzuchi-bamboo-bank/assets/index-BBU1IRw6.js"></script>
 </head>
 <body>
 
@@ -369,83 +439,165 @@
   <div class="bamboo-section">
     <div class="title">🎋 竹筒歲月．點滴成愛</div>
     <div class="bamboo-container" id="bambooContainer">
-      <svg class="bamboo-svg" viewBox="0 0 200 280" fill="none">
+      <svg class="bamboo-svg" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- Shadow -->
-        <ellipse cx="100" cy="270" rx="60" ry="8" fill="#3A2E20" opacity="0.08"/>
+        <ellipse cx="100" cy="290" rx="55" ry="7" fill="#3A2E20" opacity="0.10"/>
         
-        <!-- Main bamboo tube body -->
         <defs>
-          <linearGradient id="bambooGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#C4A36A"/>
-            <stop offset="20%" stop-color="#D4B88A"/>
-            <stop offset="40%" stop-color="#C8A870"/>
-            <stop offset="60%" stop-color="#E0C898"/>
-            <stop offset="80%" stop-color="#C8A870"/>
-            <stop offset="100%" stop-color="#B89860"/>
+          <!-- 竹身主漸層：自然的竹黃色 -->
+          <linearGradient id="bambooBody" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#B8955A"/>
+            <stop offset="8%" stop-color="#C8A870"/>
+            <stop offset="18%" stop-color="#DEC898"/>
+            <stop offset="30%" stop-color="#E8D4A8"/>
+            <stop offset="45%" stop-color="#EAD8B0"/>
+            <stop offset="55%" stop-color="#E5CFA0"/>
+            <stop offset="70%" stop-color="#DCC490"/>
+            <stop offset="85%" stop-color="#C8A870"/>
+            <stop offset="100%" stop-color="#B08850"/>
           </linearGradient>
-          <linearGradient id="slotGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#3A2E20"/>
-            <stop offset="100%" stop-color="#5A4E3A"/>
+          <!-- 斜面切口漸層 -->
+          <linearGradient id="cutTop" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#EDD8B0"/>
+            <stop offset="50%" stop-color="#DCC48A"/>
+            <stop offset="100%" stop-color="#B89058"/>
           </linearGradient>
-          <clipPath id="bambooClip">
-            <rect x="60" y="20" width="80" height="245" rx="6"/>
+          <!-- 內部陰影 -->
+          <linearGradient id="innerShadow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5A4A30"/>
+            <stop offset="100%" stop-color="#2A2010"/>
+          </linearGradient>
+          <!-- 紅緞帶 -->
+          <linearGradient id="ribbonGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E84040"/>
+            <stop offset="40%" stop-color="#D43030"/>
+            <stop offset="100%" stop-color="#B02020"/>
+          </linearGradient>
+          <clipPath id="bambooMain">
+            <rect x="50" y="25" width="100" height="250" rx="4"/>
           </clipPath>
         </defs>
 
-        <!-- Body -->
-        <rect x="60" y="20" width="80" height="245" rx="6" fill="url(#bambooGrad)" stroke="#B89860" stroke-width="1"/>
+        <!-- ===== 竹身本體 ===== -->
+        <!-- 主體 -->
+        <rect x="50" y="25" width="100" height="250" rx="4" fill="url(#bambooBody)" stroke="#A07840" stroke-width="0.8"/>
 
-        <!-- Bamboo segments (nodes) -->
-        <g clip-path="url(#bambooClip)" opacity="0.3">
-          <line x1="55" y1="50" x2="145" y2="50" stroke="#8B7355" stroke-width="0.8"/>
-          <line x1="55" y1="80" x2="145" y2="80" stroke="#8B7355" stroke-width="0.8"/>
-          <line x1="55" y1="110" x2="145" y2="110" stroke="#8B7355" stroke-width="0.8"/>
-          <line x1="55" y1="140" x2="145" y2="140" stroke="#8B7355" stroke-width="0.8"/>
-          <line x1="55" y1="170" x2="145" y2="170" stroke="#8B7355" stroke-width="0.8"/>
-          <line x1="55" y1="200" x2="145" y2="200" stroke="#8B7355" stroke-width="0.8"/>
-          <line x1="55" y1="230" x2="145" y2="230" stroke="#8B7355" stroke-width="0.8"/>
+        <!-- 竹節 (Bamboo nodes - raised rings) -->
+        <g clip-path="url(#bambooMain)" opacity="0.5">
+          <!-- 每個節：深色環帶 + 亮邊 -->
+          <g>
+            <rect x="48" y="55" width="104" height="4" rx="1" fill="#A0804A" opacity="0.6"/>
+            <rect x="48" y="55" width="104" height="1" fill="#E8D4A0" opacity="0.4"/>
+          </g>
+          <g>
+            <rect x="48" y="95" width="104" height="4" rx="1" fill="#A0804A" opacity="0.6"/>
+            <rect x="48" y="95" width="104" height="1" fill="#E8D4A0" opacity="0.4"/>
+          </g>
+          <g>
+            <rect x="48" y="135" width="104" height="4" rx="1" fill="#A0804A" opacity="0.6"/>
+            <rect x="48" y="135" width="104" height="1" fill="#E8D4A0" opacity="0.4"/>
+          </g>
+          <g>
+            <rect x="48" y="175" width="104" height="4" rx="1" fill="#A0804A" opacity="0.6"/>
+            <rect x="48" y="175" width="104" height="1" fill="#E8D4A0" opacity="0.4"/>
+          </g>
+          <g>
+            <rect x="48" y="215" width="104" height="4" rx="1" fill="#A0804A" opacity="0.5"/>
+            <rect x="48" y="215" width="104" height="1" fill="#E8D4A0" opacity="0.3"/>
+          </g>
         </g>
 
-        <!-- Bamboo grain texture -->
-        <g clip-path="url(#bambooClip)" opacity="0.08">
-          <line x1="70" y1="20" x2="70" y2="265" stroke="#5A4E3A" stroke-width="0.5"/>
-          <line x1="85" y1="20" x2="85" y2="265" stroke="#5A4E3A" stroke-width="0.3"/>
-          <line x1="100" y1="20" x2="100" y2="265" stroke="#5A4E3A" stroke-width="0.4"/>
-          <line x1="115" y1="20" x2="115" y2="265" stroke="#5A4E3A" stroke-width="0.3"/>
-          <line x1="130" y1="20" x2="130" y2="265" stroke="#5A4E3A" stroke-width="0.5"/>
+        <!-- 竹紋 (Bamboo grain texture) -->
+        <g clip-path="url(#bambooMain)" opacity="0.07">
+          <line x1="62" y1="25" x2="62" y2="275" stroke="#5A4A30" stroke-width="0.6"/>
+          <line x1="75" y1="25" x2="75" y2="275" stroke="#5A4A30" stroke-width="0.4"/>
+          <line x1="85" y1="25" x2="85" y2="275" stroke="#5A4A30" stroke-width="0.3"/>
+          <line x1="95" y1="25" x2="95" y2="275" stroke="#5A4A30" stroke-width="0.4"/>
+          <line x1="107" y1="25" x2="107" y2="275" stroke="#5A4A30" stroke-width="0.3"/>
+          <line x1="120" y1="25" x2="120" y2="275" stroke="#5A4A30" stroke-width="0.5"/>
+          <line x1="133" y1="25" x2="133" y2="275" stroke="#5A4A30" stroke-width="0.4"/>
+          <line x1="142" y1="25" x2="142" y2="275" stroke="#5A4A30" stroke-width="0.5"/>
         </g>
 
-        <!-- Coin slot -->
-        <rect x="85" y="15" width="30" height="10" rx="3" fill="url(#slotGrad)"/>
-        <rect x="88" y="17" width="24" height="6" rx="2" fill="#1A1410"/>
+        <!-- 竹身明暗立體感 (Light/shadow for 3D effect) -->
+        <g clip-path="url(#bambooMain)" opacity="0.12">
+          <rect x="50" y="25" width="18" height="250" fill="white"/>
+          <rect x="122" y="25" width="28" height="250" fill="black"/>
+        </g>
 
-        <!-- Top rim -->
-        <rect x="58" y="20" width="84" height="4" rx="2" fill="#B89860" opacity="0.5"/>
+        <!-- ===== 頂部斜切口 ===== -->
+        <!-- 真實的竹筒撲滿是斜切開口的 -->
+        <path d="M50 28 L150 25 L150 35 L50 38 Z" fill="url(#cutTop)" stroke="#A07840" stroke-width="0.5"/>
+        <!-- 切口內緣 -->
+        <path d="M54 32 L146 29 L146 33 L54 36 Z" fill="#3A2A15" opacity="0.6"/>
 
-        <!-- Bottom rim -->
-        <rect x="58" y="258" width="84" height="4" rx="2" fill="#A08050" opacity="0.5"/>
+        <!-- ===== 投幣口 (Coin slot on the cut surface) ===== -->
+        <ellipse cx="100" cy="33" rx="14" ry="4" fill="#1A1008" opacity="0.9"/>
+        <ellipse cx="100" cy="33" rx="12" ry="3" fill="#0A0804"/>
+        <!-- Slot highlight -->
+        <ellipse cx="100" cy="31" rx="10" ry="1.5" fill="#2A2010" opacity="0.4"/>
 
-        <!-- Red ribbon -->
-        <path d="M60 130 Q55 125 60 120 L80 120 Q85 125 80 130Z" fill="#D44A4A" opacity="0.85"/>
-        <path d="M60 130 Q55 135 60 140 L80 140 Q85 135 80 130Z" fill="#C44040" opacity="0.85"/>
-        <rect x="58" y="126" width="23" height="8" rx="2" fill="#D44A4A"/>
+        <!-- ===== 上緣裝飾環 ===== -->
+        <rect x="48" y="38" width="104" height="2" rx="1" fill="#A07840" opacity="0.4"/>
 
-        <!-- Ribbon knot -->
-        <circle cx="80" cy="130" r="5" fill="#C44040"/>
-        <circle cx="80" cy="130" r="3" fill="#D44A4A"/>
+        <!-- ===== 底部 ===== -->
+        <rect x="48" y="270" width="104" height="3" rx="1.5" fill="#8A6830" opacity="0.6"/>
+        <ellipse cx="100" cy="273" rx="50" ry="3" fill="#7A5828" opacity="0.2"/>
 
-        <!-- Ribbon tails -->
-        <path d="M80 135 Q78 150 76 160" stroke="#C44040" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <path d="M80 135 Q84 148 86 158" stroke="#D44A4A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- ===== 紅色緞帶 (Red Ribbon) ===== -->
+        <!-- 上緞帶 -->
+        <path d="M50 138 L50 152 Q50 156 54 156 L82 156 Q86 156 86 152 L86 138 Q86 134 82 134 L54 134 Q50 134 50 138Z" fill="url(#ribbonGrad)"/>
+        <!-- 緞帶光澤 -->
+        <path d="M52 140 L52 150 Q52 153 55 153 L68 153 L68 136 L55 136 Q52 136 52 140Z" fill="white" opacity="0.1"/>
+        <!-- 下緞帶 -->
+        <path d="M50 152 Q50 156 53 158 L80 158 Q83 156 84 152 L84 158 Q84 162 80 162 L53 162 Q50 162 50 158Z" fill="#B02020" opacity="0.5"/>
 
-        <!-- Text on bamboo -->
-        <text x="100" y="190" text-anchor="middle" fill="#3A2E20" font-size="11" font-weight="500" opacity="0.7" letter-spacing="2">竹筒歲月</text>
-        <text x="100" y="206" text-anchor="middle" fill="#3A2E20" font-size="9" opacity="0.5" letter-spacing="1">點滴聚大愛</text>
+        <!-- ===== 蝴蝶結 (Bow knot) ===== -->
+        <!-- 中心結 -->
+        <circle cx="83" cy="147" r="7" fill="#D43030"/>
+        <circle cx="83" cy="147" r="4" fill="#E04040"/>
+        <!-- 左耳 -->
+        <path d="M76 147 Q65 138 68 148 Q65 155 76 147Z" fill="#D43030"/>
+        <path d="M75 147 Q68 141 70 148 Q68 152 75 147Z" fill="#E04040" opacity="0.6"/>
+        <!-- 右耳 -->
+        <path d="M90 147 Q101 138 98 148 Q101 155 90 147Z" fill="#D43030"/>
+        <path d="M91 147 Q98 141 96 148 Q98 152 91 147Z" fill="#E04040" opacity="0.6"/>
+        <!-- 緞帶尾 -->
+        <path d="M83 154 Q78 168 75 178" stroke="#B02020" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <path d="M83 154 Q90 169 93 179" stroke="#D43030" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <!-- 尾端小三角 -->
+        <path d="M74 178 L72 183 L78 180Z" fill="#B02020" opacity="0.7"/>
+        <path d="M94 179 L92 184 L97 182Z" fill="#D43030" opacity="0.7"/>
 
-        <!-- Coin inside (shows when has coins) -->
-        <g id="coinInside" opacity="0">
-          <circle cx="100" cy="245" r="8" fill="#C8974A" stroke="#B8863A" stroke-width="1"/>
-          <text x="100" y="248" text-anchor="middle" fill="#3A2E20" font-size="8" font-weight="bold">1</text>
+        <!-- ===== 慈濟蓮花 Logo (手繪風格) ===== -->
+        <g transform="translate(100, 92)" opacity="0.75">
+          <!-- 蓮花花瓣 -->
+          <path d="M0 -6 Q-5 -14 -3 -10 Q-2 -8 0 -6Z" fill="#9BC53D" opacity="0.7"/>
+          <path d="M0 -6 Q5 -14 3 -10 Q2 -8 0 -6Z" fill="#9BC53D" opacity="0.7"/>
+          <!-- 花心 -->
+          <circle cx="0" cy="-6" r="1.5" fill="#C8974A"/>
+        </g>
+
+        <!-- ===== 「竹筒歲月」書法字 ===== -->
+        <text x="100" y="200" text-anchor="middle" fill="#3A2E20" font-size="13" font-weight="500" opacity="0.8" font-family="'Noto Sans TC','KaiTi','STKaiti',serif" letter-spacing="3">竹筒歲月</text>
+        <text x="100" y="218" text-anchor="middle" fill="#5A4E3A" font-size="9" opacity="0.55" font-family="'Noto Sans TC',sans-serif" letter-spacing="1.5">點滴聚大愛</text>
+
+        <!-- ===== 右下方裝飾小蓮花 ===== -->
+        <g transform="translate(145, 245)" opacity="0.25">
+          <path d="M0 -3 Q-2.5 -7 -1.5 -5 Q-1 -4 0 -3Z" fill="#9BC53D"/>
+          <path d="M0 -3 Q2.5 -7 1.5 -5 Q1 -4 0 -3Z" fill="#9BC53D"/>
+          <circle cx="0" cy="-3" r="0.8" fill="#C8974A"/>
+        </g>
+
+        <!-- ===== 內部錢幣 (顯示累積金額) ===== -->
+        <g id="coinStack" opacity="0" clip-path="url(#bambooMain)">
+          <!-- 動態由 JavaScript 控制顯示 -->
+          <circle cx="95" cy="248" r="7" fill="#E8B830" stroke="#C8974A" stroke-width="0.5"/>
+          <circle cx="95" cy="248" r="5" fill="#F0C840" opacity="0.6"/>
+          <circle cx="105" cy="250" r="7" fill="#E8B830" stroke="#C8974A" stroke-width="0.5"/>
+          <circle cx="105" cy="250" r="5" fill="#F0C840" opacity="0.6"/>
+          <circle cx="100" cy="253" r="7" fill="#E8B830" stroke="#C8974A" stroke-width="0.5"/>
+          <circle cx="100" cy="253" r="5" fill="#F0C840" opacity="0.6"/>
         </g>
       </svg>
 
@@ -458,6 +610,13 @@
       <div class="amount"><span id="totalAmount">0</span><span class="unit">元</span></div>
       <div class="sub" id="todayCount">今日已投入 0 元</div>
     </div>
+  </div>
+
+  <!-- ===== Applause Overlay ===== -->
+  <div class="applause-overlay" id="applauseOverlay">
+    <div class="hands">👏</div>
+    <div class="text">功德無量！</div>
+    <div class="sub-text">善根增長．福慧雙修</div>
   </div>
 
   <!-- Stats -->
