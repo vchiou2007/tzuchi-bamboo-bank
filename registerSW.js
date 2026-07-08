@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/tzuchi-bamboo-bank/sw.js', { scope: '/tzuchi-bamboo-bank/' })})}
