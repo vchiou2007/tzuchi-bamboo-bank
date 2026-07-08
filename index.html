@@ -46,10 +46,17 @@
       letter-spacing: 0.5px;
     }
     .header .tzuchi-logo {
-      width: 200px; height: auto;
-      margin: 0 auto 10px;
+      width: 220px; height: auto;
+      margin: 0 auto 4px;
       display: block;
       border-radius: 4px;
+    }
+    .header .org-name {
+      font-size: 16px;
+      color: #5A4E3A;
+      letter-spacing: 3px;
+      font-weight: 500;
+      margin-bottom: 6px;
     }
     /* ===== Jing Si Aphorism Card ===== */
     .aphorism-card {
@@ -270,6 +277,76 @@
       transform: none;
       box-shadow: none;
     }
+    /* ===== Reset Button ===== */
+    .reset-btn {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid rgba(196, 176, 140, 0.3);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.5);
+      color: #8B7355;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      margin-top: 8px;
+      touch-action: manipulation;
+    }
+    .reset-btn:hover { background: rgba(255,255,255,0.8); color: #3A2E20; }
+    .reset-btn:active { transform: scale(0.97); }
+    /* ===== Modal ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: white;
+      border-radius: 20px;
+      padding: 28px 24px;
+      max-width: 300px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      animation: modalIn 0.3s ease-out;
+    }
+    @keyframes modalIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .modal-icon { font-size: 48px; margin-bottom: 8px; }
+    .modal-title { font-size: 18px; font-weight: 600; color: #3A2E20; margin-bottom: 8px; }
+    .modal-text { font-size: 13px; color: #8B7355; line-height: 1.6; margin-bottom: 20px; }
+    .modal-btns { display: flex; gap: 10px; }
+    .modal-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .modal-btn.cancel {
+      background: #F0ECE4;
+      color: #8B7355;
+    }
+    .modal-btn.cancel:hover { background: #E8E0D4; }
+    .modal-btn.confirm {
+      background: linear-gradient(135deg, #D44A4A, #B83030);
+      color: white;
+    }
+    .modal-btn.confirm:hover { background: linear-gradient(135deg, #C44040, #A82828); }
     /* ===== History ===== */
     .history-section {
       width: 100%;
@@ -434,15 +511,16 @@
       .aphorism-card .quote { font-size: 15px; }
     }
   </style>
-  <script type="module" crossorigin src="/tzuchi-bamboo-bank/assets/index-B3AzVUca.js"></script>
+  <script type="module" crossorigin src="/tzuchi-bamboo-bank/assets/index-D5IopzdB.js"></script>
 </head>
 <body>
 
 <div id="app">
   <!-- Header -->
   <div class="header">
-    <!-- 慈濟 Logo + 組織名稱 -->
+    <!-- 慈濟 Logo（無文字） + 組織名稱 -->
     <img class="tzuchi-logo" src="/tzuchi-bamboo-bank/tzuchi-logo.jpg" alt="慈濟加東分會" />
+    <div class="org-name">慈濟加東分會</div>
     <div class="greeting" id="greeting">早安，菩薩早安</div>
     <div class="date-display" id="dateDisplay">—</div>
   </div>
@@ -631,21 +709,42 @@
     </div>
     <div class="stat-card">
       <div class="num" id="statDays">0</div>
-      <div class="lbl">累積天數</div>
+      <div class="lbl">投入天數</div>
     </div>
     <div class="stat-card">
       <div class="num" id="statTotal">0</div>
-      <div class="lbl">總金額</div>
+      <div class="lbl">目前總額</div>
     </div>
+  </div>
+  <div style="width:100%;text-align:center;margin-top:0;padding:4px 0 8px;">
+    <span style="font-size:11px;color:#A09070;letter-spacing:1px;">🕯️ 累計總額</span>
+    <span style="font-size:16px;font-weight:600;color:#5A4E3A;margin-left:6px;" id="statLifetime">0</span>
+    <span style="font-size:11px;color:#A09070;">元</span>
   </div>
 
   <!-- Drop button -->
   <button class="drop-btn" id="dropBtn">投入一元 💰</button>
 
+  <!-- Reset button -->
+  <button class="reset-btn" id="resetBtn">🔄 重置竹筒（保留歷史紀錄）</button>
+
   <!-- History -->
   <div class="history-section">
     <button class="toggle-btn" id="historyToggle">📋 查看投入紀錄</button>
     <div class="history-list" id="historyList"></div>
+  </div>
+</div>
+
+<!-- ===== Reset Confirmation Modal ===== -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal-box">
+    <div class="modal-icon">🔄</div>
+    <div class="modal-title">重置竹筒撲滿</div>
+    <div class="modal-text">竹筒內的錢幣將會清空歸零，<br/>但所有歷史紀錄會保留。<br/>確定要重置嗎？</div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" id="modalCancel">取消</button>
+      <button class="modal-btn confirm" id="modalConfirm">確定重置</button>
+    </div>
   </div>
 </div>
 
