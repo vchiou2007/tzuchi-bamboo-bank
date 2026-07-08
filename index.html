@@ -439,16 +439,45 @@
   <!-- Header -->
   <div class="header">
     <!-- 慈濟 Logo + 組織名稱 -->
-    <svg class="tzuchi-logo" viewBox="0 0 100 100" fill="none">
-      <!-- 外圈蓮花花瓣 -->
-      <path d="M50 12 Q35 25 28 45 Q25 55 30 60 Q38 58 50 48 Q62 58 70 60 Q75 55 72 45 Q65 25 50 12Z" fill="#9BC53D" opacity="0.85"/>
-      <path d="M50 16 Q40 28 34 44 Q31 52 35 56 Q40 54 50 46 Q60 54 65 56 Q69 52 66 44 Q60 28 50 16Z" fill="#FFFFFF" opacity="0.6"/>
-      <!-- 花心 -->
-      <circle cx="50" cy="40" r="7" fill="#C8974A" opacity="0.7"/>
-      <circle cx="50" cy="40" r="4" fill="#E8B830" opacity="0.5"/>
-      <!-- 慈濟中文字 -->
-      <text x="50" y="78" text-anchor="middle" fill="#3A2E20" font-size="12" font-weight="700" letter-spacing="3" font-family="'Noto Sans TC',sans-serif">慈濟</text>
-      <text x="50" y="92" text-anchor="middle" fill="#5A4E3A" font-size="8" font-weight="500" letter-spacing="2" font-family="'Noto Sans TC',sans-serif">加東分會</text>
+    <svg class="tzuchi-logo" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- 外圍綠葉 -->
+      <path d="M60 4 Q40 10 20 28 Q15 35 18 38 Q22 36 30 30 Q25 28 28 20 Q32 16 38 14 Q42 12 50 10 Q55 8 60 4Z" fill="#5A9E3A" opacity="0.85"/>
+      <path d="M60 4 Q80 10 100 28 Q105 35 102 38 Q98 36 90 30 Q95 28 92 20 Q88 16 82 14 Q78 12 70 10 Q65 8 60 4Z" fill="#5A9E3A" opacity="0.85"/>
+      <path d="M60 116 Q40 110 20 92 Q15 85 18 82 Q22 84 30 90 Q25 92 28 100 Q32 104 38 106 Q42 108 50 110 Q55 112 60 116Z" fill="#5A9E3A" opacity="0.85"/>
+      <path d="M60 116 Q80 110 100 92 Q105 85 102 82 Q98 84 90 90 Q95 92 92 100 Q88 104 82 106 Q78 108 70 110 Q65 112 60 116Z" fill="#5A9E3A" opacity="0.85"/>
+      <path d="M8 50 Q6 45 6 40 Q8 30 16 22 L20 28 Q14 34 12 42 Q10 48 8 50Z" fill="#5A9E3A" opacity="0.7"/>
+      <path d="M112 50 Q114 45 114 40 Q112 30 104 22 L100 28 Q106 34 108 42 Q110 48 112 50Z" fill="#5A9E3A" opacity="0.7"/>
+      <path d="M8 70 Q6 75 6 80 Q8 90 16 98 L20 92 Q14 86 12 78 Q10 72 8 70Z" fill="#5A9E3A" opacity="0.7"/>
+      <path d="M112 70 Q114 75 114 80 Q112 90 104 98 L100 92 Q106 86 108 78 Q110 72 112 70Z" fill="#5A9E3A" opacity="0.7"/>
+      
+      <!-- 盾牌主體 -->
+      <path d="M30 40 Q30 20 60 15 Q90 20 90 40 L90 80 Q90 100 60 110 Q30 100 30 80Z" fill="#4A8E2A" stroke="#3A7A1E" stroke-width="1.5"/>
+      <!-- 盾牌內層 -->
+      <path d="M34 42 Q34 24 60 19 Q86 24 86 42 L86 78 Q86 96 60 105 Q34 96 34 78Z" fill="#5AA03A" stroke="#4A8E2A" stroke-width="0.8"/>
+      
+      <!-- 船帆 (Sails) -->
+      <path d="M52 55 L52 38 Q56 42 62 46 Q56 50 52 55Z" fill="white" opacity="0.95"/>
+      <path d="M55 56 L55 42 Q60 46 66 50 Q60 54 55 56Z" fill="white" opacity="0.85"/>
+      <path d="M58 58 L58 48 Q62 50 68 53 Q64 56 58 58Z" fill="white" opacity="0.75"/>
+      
+      <!-- 船身 (Hull) -->
+      <path d="M38 58 Q44 56 52 55 L70 53 Q78 54 82 58 L38 58Z" fill="white" opacity="0.95"/>
+      <path d="M38 58 L38 62 Q42 64 60 64 Q78 64 82 62 L82 58Z" fill="white" opacity="0.8"/>
+      
+      <!-- 旗桿 + 旗幟 -->
+      <line x1="52" y1="38" x2="52" y2="30" stroke="white" stroke-width="1.5" opacity="0.9"/>
+      <path d="M52 30 L58 33 L52 36Z" fill="#D44A4A" opacity="0.9"/>
+      
+      <!-- 海浪 (Waves) -->
+      <path d="M40 66 Q44 64 48 66 Q52 68 56 66 Q60 64 64 66 Q68 68 72 66 Q76 64 80 66" stroke="white" stroke-width="1.2" fill="none" opacity="0.8"/>
+      <path d="M38 70 Q42 68 46 70 Q50 72 54 70 Q58 68 62 70 Q66 72 70 70 Q74 68 78 70" stroke="white" stroke-width="1" fill="none" opacity="0.6"/>
+      
+      <!-- 左右文字 (慈 濟) -->
+      <text x="46" y="84" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="'Noto Sans TC',sans-serif">慈</text>
+      <text x="74" y="84" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="'Noto Sans TC',sans-serif">濟</text>
+      
+      <!-- 下方文字 (加東分會) -->
+      <text x="60" y="98" text-anchor="middle" fill="white" font-size="8" font-weight="500" font-family="'Noto Sans TC',sans-serif" letter-spacing="1.5">加東分會</text>
     </svg>
     <div class="greeting" id="greeting">早安，菩薩早安</div>
     <div class="date-display" id="dateDisplay">—</div>
