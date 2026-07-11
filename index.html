@@ -502,6 +502,144 @@
       60% { transform: translate(-2px, 4px); }
       100% { transform: translate(2px, -4px); }
     }
+    /* ===== 🪙 錢幣面額選擇器 (Coin Value Selector) ===== */
+    .coin-selector {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px 0 6px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 12px;
+      border: 1px solid rgba(196,176,140,0.15);
+    }
+    .coin-selector-label {
+      font-size: 13px;
+      color: #8B7355;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .coin-selector-btns {
+      display: flex;
+      gap: 6px;
+    }
+    .coin-value-btn {
+      padding: 6px 16px;
+      border: 1.5px solid #D4C5A6;
+      border-radius: 20px;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 500;
+      color: #8B7355;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      touch-action: manipulation;
+    }
+    .coin-value-btn:hover {
+      background: rgba(155,197,61,0.08);
+      border-color: #9BC53D;
+    }
+    .coin-value-btn.active {
+      background: linear-gradient(135deg, #9BC53D, #7FA832);
+      border-color: #7FA832;
+      color: white;
+      box-shadow: 0 2px 8px rgba(155,197,61,0.3);
+    }
+    .coin-value-btn:active {
+      transform: scale(0.95);
+    }
+    /* ===== 🏆 $20 里程碑通知 (Milestone Notification) ===== */
+    .milestone-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      animation: milestoneFadeIn 0.4s ease-out;
+    }
+    @keyframes milestoneFadeIn {
+      0% { opacity: 0; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .milestone-card {
+      background: white;
+      border-radius: 24px;
+      padding: 36px 32px 28px;
+      max-width: 320px;
+      width: 88%;
+      text-align: center;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+      animation: milestoneBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes milestoneBounce {
+      0% { transform: scale(0.7) translateY(30px); }
+      100% { transform: scale(1) translateY(0); }
+    }
+    .milestone-icon {
+      font-size: 56px;
+      margin-bottom: 6px;
+    }
+    .milestone-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #3A2E20;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .milestone-amount {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0d9488;
+      margin: 8px 0;
+      letter-spacing: 1px;
+    }
+    .milestone-amount strong {
+      color: #d97706;
+    }
+    .milestone-msg {
+      font-size: 14px;
+      color: #8B7355;
+      line-height: 1.5;
+      margin: 8px 0 18px;
+      letter-spacing: 1px;
+    }
+    .milestone-btn {
+      padding: 10px 28px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #9BC53D, #7FA832);
+      color: white;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+    .milestone-btn:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px rgba(155,197,61,0.3);
+    }
+    .milestone-btn:active {
+      transform: scale(0.97);
+    }
+    /* ===== 飛幣金額標籤 (Coin Fly Amount) ===== */
+    .coin-fly .coin-amount {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #d97706;
+      text-align: center;
+      margin-top: -4px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
     /* ===== Responsive ===== */
     @media (max-width: 420px) {
       #app { padding: 16px 12px 24px; }
@@ -510,7 +648,7 @@
       .aphorism-card .quote { font-size: 15px; }
     }
   </style>
-  <script type="module" crossorigin src="/tzuchi-bamboo-bank/assets/index-CRdDun1C.js"></script>
+  <script type="module" crossorigin src="/tzuchi-bamboo-bank/assets/index-D72NpPmp.js"></script>
 <link rel="manifest" href="/tzuchi-bamboo-bank/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/tzuchi-bamboo-bank/registerSW.js"></script></head>
 <body>
 
@@ -693,8 +831,17 @@
     </div>
   </div>
 
+  <!-- 🪙 錢幣面額選擇器 -->
+  <div class="coin-selector">
+    <div class="coin-selector-label" id="coin-value-label">🪙 一塊</div>
+    <div class="coin-selector-btns">
+      <button class="coin-value-btn" data-value="0.5">五毛</button>
+      <button class="coin-value-btn active" data-value="1">一塊</button>
+      <button class="coin-value-btn" data-value="2">兩塊</button>
+    </div>
+  </div>
+
   <!-- ===== Applause Overlay ===== -->
-  <div class="applause-overlay" id="applauseOverlay">
     <div class="hands">👏</div>
     <div class="text">功德無量！</div>
     <div class="sub-text">善根增長．福慧雙修</div>
